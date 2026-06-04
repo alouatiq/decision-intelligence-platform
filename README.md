@@ -1,10 +1,10 @@
 # Decision Intelligence Platform
 
-A modern, frontend-only web application for making better decisions using 14+ proven decision-making frameworks and tools.
+A modern, frontend-only web application for making better decisions using 15 proven decision-making frameworks and tools.
 
 ## Features
 
-✨ **14+ Decision Tools**
+✨ **15 Decision Tools**
 - Eisenhower Matrix - Prioritize by urgency & importance
 - MoSCoW Method - Must/Should/Could/Won't classification
 - RICE Scoring - Reach, Impact, Confidence, Effort prioritization
@@ -15,6 +15,7 @@ A modern, frontend-only web application for making better decisions using 14+ pr
 - 5 Whys - Root cause analysis
 - Fishbone Diagram - Ishikawa cause-effect diagram
 - Decision Matrix - Compare alternatives by weighted criteria
+- Decision Table - Weighted scoring: rate options 1–5 against weighted criteria, with per-option totals and best-option recommendation
 - Cost-Benefit Analysis - Financial impact evaluation
 - Mind Mapping - Hierarchical idea organization
 - Six Thinking Hats - Multi-perspective decision analysis
@@ -129,6 +130,7 @@ src/
 │   ├── FiveWhys.tsx
 │   ├── FishboneDiagram.tsx
 │   ├── DecisionMatrix.tsx
+│   ├── DecisionTable.tsx
 │   ├── CostBenefitAnalysis.tsx
 │   ├── MindMapping.tsx
 │   ├── SixThinkingHats.tsx

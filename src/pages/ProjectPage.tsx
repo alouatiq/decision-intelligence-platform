@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDecisionStore } from '../store'
-import { ArrowLeft, Save, Download, Share2, Edit2 } from 'lucide-react'
+import { ArrowLeft, Download, Edit2 } from 'lucide-react'
 import { exportToPDF } from '../utils/pdfExport'
 
 interface ProjectPageProps {
@@ -143,12 +143,6 @@ export const ProjectPage: React.FC<ProjectPageProps> = ({ projectId, onBack }) =
               >
                 <Download size={18} />
                 Export PDF
-              </button>
-              <button
-                className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors"
-              >
-                <Share2 size={18} />
-                Share
               </button>
             </div>
           </>

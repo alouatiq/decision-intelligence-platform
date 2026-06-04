@@ -1,7 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useDecisionStore, DecisionAnalysis } from '../store'
-import { Trash2, Edit, Share2, Download, Clock, LogIn, X } from 'lucide-react'
-import { exportToPDF } from '../utils/pdfExport'
+import { Trash2, Edit, Download, Clock } from 'lucide-react'
 import { v4 as uuidv4 } from 'uuid'
 
 type PageState = {
@@ -95,35 +94,6 @@ export { PageState }
 
 export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
   const { projects, deleteProject, setCurrentProject } = useDecisionStore()
-  const [showJoinModal, setShowJoinModal] = useState(false)
-  const [sessionInput, setSessionInput] = useState('')
-  const [error, setError] = useState('')
-
-  const handleJoinSession = () => {
-    if (!sessionInput.trim()) {
-      setError('Please enter a Session ID')
-      return
-    }
-    
-    // Create a new project with the joined session ID
-    const project: DecisionAnalysis = {
-      id: uuidv4(),
-      name: `Joined Session Analysis`,
-      description: `Joined session: ${sessionInput.substring(0, 8)}...`,
-      toolType: 'Mixed Analysis',
-      data: {},
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      isShared: true,
-      sharedWith: [],
-      sessionId: sessionInput
-    }
-    setCurrentProject(project)
-    setShowJoinModal(false)
-    setSessionInput('')
-    setError('')
-    onNavigate({ type: 'project', projectId: project.id })
-  }
 
   const tools = [
     { id: 'eisenhower', name: 'Eisenhower Matrix', icon: '⚡', desc: 'Prioritize by urgency and importance' },
@@ -136,6 +106,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
     { id: '5whys', name: '5 Whys', icon: '❓', desc: 'Root cause analysis' },
     { id: 'fishbone', name: 'Fishbone Diagram', icon: '🦴', desc: 'Ishikawa cause-effect analysis' },
     { id: 'decision-matrix', name: 'Decision Matrix', icon: '📋', desc: 'Compare alternatives by criteria' },
+    { id: 'decision-table', name: 'Decision Table', icon: '🧮', desc: 'Weighted scoring: rate options against criteria' },
     { id: 'cost-benefit', name: 'Cost-Benefit Analysis', icon: '💰', desc: 'Evaluate financial impact' },
     { id: 'mind-map', name: 'Mind Mapping', icon: '🧠', desc: 'Organize ideas hierarchically' },
     { id: '6hats', name: 'Six Thinking Hats', icon: '🎩', desc: 'Multi-perspective decision making' },
@@ -166,83 +137,15 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
 
   return (
     <div className="space-y-12">
-      {/* Header with Join Button */}
-      <div className="flex justify-between items-start">
-        <div className="text-center space-y-4 flex-1">
-          <h1 className="text-4xl font-bold text-gray-900 dark:text-white">
-            Decision Intelligence Platform
-          </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-400">
-            Make better decisions with powerful analysis tools
-          </p>
-        </div>
-        <button
-          onClick={() => setShowJoinModal(true)}
-          className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg font-medium flex items-center gap-2 transition-colors"
-        >
-          <LogIn size={20} />
-          Join Session
-        </button>
+      {/* Header */}
+      <div className="text-center space-y-4">
+        <h1 className="text-4xl font-bold text-gray-900 dark:text-white">
+          Decision Intelligence Platform
+        </h1>
+        <p className="text-xl text-gray-600 dark:text-gray-400">
+          Make better decisions with powerful analysis tools
+        </p>
       </div>
-
-      {/* Join Session Modal */}
-      {showJoinModal && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-slate-800 rounded-lg shadow-xl max-w-md w-full p-6 space-y-4 border border-gray-200 dark:border-slate-700">
-            <div className="flex justify-between items-center">
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Join Session</h2>
-              <button
-                onClick={() => {
-                  setShowJoinModal(false)
-                  setSessionInput('')
-                  setError('')
-                }}
-                className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
-              >
-                <X size={24} />
-              </button>
-            </div>
-            
-            <p className="text-gray-600 dark:text-gray-400">
-              Enter the Session ID shared by your team member
-            </p>
-            
-            <input
-              type="text"
-              placeholder="Paste Session ID here..."
-              value={sessionInput}
-              onChange={(e) => {
-                setSessionInput(e.target.value)
-                setError('')
-              }}
-              className="w-full px-4 py-2 border border-gray-300 dark:border-slate-600 rounded-lg dark:bg-slate-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            />
-            
-            {error && (
-              <p className="text-red-600 dark:text-red-400 text-sm">{error}</p>
-            )}
-            
-            <div className="flex gap-3 pt-4">
-              <button
-                onClick={() => {
-                  setShowJoinModal(false)
-                  setSessionInput('')
-                  setError('')
-                }}
-                className="flex-1 px-4 py-2 border border-gray-300 dark:border-slate-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleJoinSession}
-                className="flex-1 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-medium transition-colors"
-              >
-                Join Now
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Recent Projects */}
       {projects.length > 0 && (
@@ -294,12 +197,12 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
             <p className="text-gray-700 dark:text-gray-300">Save all your analyses and access them anytime</p>
           </div>
           <div>
-            <h3 className="font-bold mb-2 text-indigo-900 dark:text-indigo-200">👥 Collaborate</h3>
-            <p className="text-gray-700 dark:text-gray-300">Work with your team in real-time sessions</p>
+            <h3 className="font-bold mb-2 text-indigo-900 dark:text-indigo-200">📊 Export & Share</h3>
+            <p className="text-gray-700 dark:text-gray-300">Download any analysis as a PDF report to share with your team</p>
           </div>
           <div>
-            <h3 className="font-bold mb-2 text-indigo-900 dark:text-indigo-200">📊 Export</h3>
-            <p className="text-gray-700 dark:text-gray-300">Download analyses as professional PDF reports</p>
+            <h3 className="font-bold mb-2 text-indigo-900 dark:text-indigo-200">🔒 Private</h3>
+            <p className="text-gray-700 dark:text-gray-300">Your analyses stay in your browser — nothing is uploaded</p>
           </div>
           <div>
             <h3 className="font-bold mb-2 text-indigo-900 dark:text-indigo-200">🎯 Comprehensive</h3>

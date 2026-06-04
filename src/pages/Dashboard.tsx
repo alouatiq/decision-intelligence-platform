@@ -189,25 +189,49 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
       </div>
 
       {/* Features */}
-      <div className="bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-lg p-8 border border-indigo-200 dark:border-indigo-800">
-        <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Key Features</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <h3 className="font-bold mb-2 text-indigo-900 dark:text-indigo-200">💾 Save & Track</h3>
-            <p className="text-gray-700 dark:text-gray-300">Save all your analyses and access them anytime</p>
-          </div>
-          <div>
-            <h3 className="font-bold mb-2 text-indigo-900 dark:text-indigo-200">📊 Export & Share</h3>
-            <p className="text-gray-700 dark:text-gray-300">Download any analysis as a PDF report to share with your team</p>
-          </div>
-          <div>
-            <h3 className="font-bold mb-2 text-indigo-900 dark:text-indigo-200">🔒 Private</h3>
-            <p className="text-gray-700 dark:text-gray-300">Your analyses stay in your browser — nothing is uploaded</p>
-          </div>
-          <div>
-            <h3 className="font-bold mb-2 text-indigo-900 dark:text-indigo-200">🎯 Comprehensive</h3>
-            <p className="text-gray-700 dark:text-gray-300">14+ decision-making frameworks and tools</p>
-          </div>
+      <div className="bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-2xl p-8 border border-indigo-200 dark:border-indigo-800">
+        <div className="text-center mb-8">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Key Features</h2>
+          <p className="text-gray-600 dark:text-gray-400 mt-1">Everything you need to decide with confidence</p>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {[
+            {
+              icon: '🎯',
+              title: `${tools.length} Decision Tools`,
+              desc: 'Proven frameworks — from SWOT and RICE to weighted decision tables.',
+              color: 'bg-indigo-100 dark:bg-indigo-900/40'
+            },
+            {
+              icon: '📄',
+              title: 'Export to PDF',
+              desc: 'Turn any analysis into a clean, shareable PDF report in one click.',
+              color: 'bg-green-100 dark:bg-green-900/40'
+            },
+            {
+              icon: '💾',
+              title: 'Auto-Saved',
+              desc: 'Your projects are saved locally and ready whenever you return.',
+              color: 'bg-amber-100 dark:bg-amber-900/40'
+            },
+            {
+              icon: '🔒',
+              title: 'Fully Private',
+              desc: 'Everything stays in your browser — no accounts, no uploads, no tracking.',
+              color: 'bg-rose-100 dark:bg-rose-900/40'
+            }
+          ].map((feature) => (
+            <div
+              key={feature.title}
+              className="bg-white dark:bg-slate-800 rounded-xl p-5 border border-gray-200 dark:border-slate-700 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all"
+            >
+              <div className={`w-11 h-11 rounded-lg ${feature.color} flex items-center justify-center text-2xl mb-3`}>
+                {feature.icon}
+              </div>
+              <h3 className="font-bold text-gray-900 dark:text-white mb-1">{feature.title}</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">{feature.desc}</p>
+            </div>
+          ))}
         </div>
       </div>
     </div>
